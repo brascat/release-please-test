@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.1.0](https://github.com/brascat/release-please-test/compare/v1.0.0...v1.1.0) (2023-10-10)
+
+
+### Features
+
+* **features:** Add feature 4 ([228c15c](https://github.com/brascat/release-please-test/commit/228c15c37838e3ef469482043f7f224cdde669a4))
+
+
+### Bug Fixes
+
+* feature2 text ([3d91796](https://github.com/brascat/release-please-test/commit/3d91796607646aeb4a6b3753a836fc5509a6292c))
+* **features:** feature4 name ([aa18a51](https://github.com/brascat/release-please-test/commit/aa18a51af4e15a4650792439eabea2440b83f81d))
+
 ## 1.0.0 (2023-10-10)
 
 
