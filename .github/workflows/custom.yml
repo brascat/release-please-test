@@ -18,7 +18,7 @@ jobs:
         run: |
           TAG_NAME=${{ github.event.inputs.tag }}
           COMMIT_HASH=$(git show-ref -s $TAG_NAME)
-          echo "::set-output name=commit_hash::$COMMIT_HASH"
+          echo "commit_hash=$COMMIT_HASH" >> $GITHUB_OUTPUT  
 
 
   print_commit:
