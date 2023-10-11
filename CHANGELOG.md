@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.0.0](https://github.com/brascat/release-please-test/compare/v1.1.0...v2.0.0) (2023-10-11)
+
+
+### ⚠ BREAKING CHANGES
+
+* add project
+
+### Features
+
+* add project ([65ad4ea](https://github.com/brascat/release-please-test/commit/65ad4eae7d46c3a435274c6e5d35174c555a8753))
+* add service1 ([1e2264d](https://github.com/brascat/release-please-test/commit/1e2264db1f77ba7c7c1aac02d278678c1efcbfab))
+* add service2 ([244e4eb](https://github.com/brascat/release-please-test/commit/244e4eb025515a3148e605f58e5c3010a85e60cc))
+
 ## [1.1.0](https://github.com/brascat/release-please-test/compare/v1.0.0...v1.1.0) (2023-10-10)
 
 
