@@ -23,8 +23,8 @@ jobs:
 
   print_commit:
     runs-on: ubuntu-latest
-    needs: retrieve_commit
+    needs: get_commit
 
     steps:
       - name: Print Last Commit
-        run: echo "Last commit with tag ${{ github.event.inputs.tag }} is ${{ needs.retrieve_commit.outputs.commit_hash }}"
+        run: echo "Last commit with tag ${{ github.event.inputs.tag }} is ${{ needs.get_commit.outputs.commit_hash }}"
