@@ -13,11 +13,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Get Last Commit with Tag
         run: |
           TAG_NAME=${{ github.event.inputs.tag }}
-          COMMIT_HASH=$(git rev-list -n 1 $TAG_NAME)
+          COMMIT_HASH=$(git show-ref -s $TAG_NAME)
           echo "::set-output name=commit_hash::$COMMIT_HASH"
 
 
