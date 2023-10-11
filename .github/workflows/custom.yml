@@ -22,7 +22,7 @@ jobs:
 
 
   print_commit:
-    runs-on: ubuntu-latest
+    runs_on: ubuntu-latest
     needs: retrieve_commit
 
     steps:
