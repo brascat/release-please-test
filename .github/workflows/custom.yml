@@ -11,10 +11,13 @@ on:
 jobs:
   get_commit:
     runs-on: ubuntu-latest
+    outputs:
+      commit_hash: ${{steps.get_hash.outputs.commit_hash}}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
       - name: Get Last Commit with Tag
+        id: "get_hash"
         run: |
           TAG_NAME=${{ github.event.inputs.tag }}
           COMMIT_HASH=$(git show-ref -s $TAG_NAME)
