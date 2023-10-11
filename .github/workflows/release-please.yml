@@ -10,5 +10,8 @@ jobs:
     steps:
       - uses: google-github-actions/release-please-action@v3
         with:
-          release-type: simple # Multiple release types are supported
+          release-type: simple
           default-branch: main
+          service1:
+            release-type: simple
+            changelog-path: "service1/CHANGELOG.md"
