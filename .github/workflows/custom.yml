@@ -12,17 +12,17 @@ jobs:
   get_commit:
     runs-on: ubuntu-latest
     outputs:
-      commit_hash: ${{steps.get_hash.outputs.commit_hash}}
+      history: ${{steps.get_hash.outputs.history}}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
           ref: ${{ github.event.inputs.tag }}
-      - name: Get Last Commit with Tag
+      - name: Get
         id: "get_hash"
         run: |
           TAG_NAME=${{ github.event.inputs.tag }}
-          echo "commit_hash=$(git show-ref -s $TAG_NAME)" >> $GITHUB_OUTPUT 
+          echo "history=$(git log --oneline $TAG_NAME..HEAD)" >> $GITHUB_OUTPUT 
 
 
   print_commit:
@@ -31,4 +31,4 @@ jobs:
 
     steps:
       - name: Print Last Commit
-        run: echo "Last commit with tag ${{ github.event.inputs.tag }} is ${{ needs.get_commit.outputs.commit_hash }}"
+        run: echo "History':' ${{ github.event.inputs.tag }} \n ${{ needs.get_commit.outputs.history }}"
