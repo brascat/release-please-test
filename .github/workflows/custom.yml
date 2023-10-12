@@ -39,11 +39,14 @@ jobs:
         env:
           TAG: ${{ env.NEXT_TAG }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#      - name: Tag Last Commit
-#        id: "tag_last_commit"
-#        run: |
-#          git tag -a $NEXT_TAG -m "Tag commit"
-#          git push origin $NEXT_TAG
+      - name: Generate Release Notes
+        run: git rev-list --pretty carts-6..carts-7
+      - name: Create Release
+        id: "create_release"
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 
   print_commit:
     runs-on: ubuntu-latest
