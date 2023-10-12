@@ -37,7 +37,7 @@ jobs:
       - name: Tag Last Commit
         uses: cardinalby/git-tag-action@master
         env:
-          TAG: $NEXT_TAG
+          TAG: ${{ env.NEXT_TAG }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 #      - name: Tag Last Commit
 #        id: "tag_last_commit"
