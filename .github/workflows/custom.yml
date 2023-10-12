@@ -35,10 +35,15 @@ jobs:
           echo "Next tag will be $NEXT_TAG"
           echo "NEXT_TAG=$NEXT_TAG" >> $GITHUB_ENV
       - name: Tag Last Commit
-        id: "tag_last_commit"
-        run: |
-          git tag -a $NEXT_TAG -m "Tag commit"
-          git push origin $NEXT_TAG
+        uses: cardinalby/git-tag-action@master
+        env:
+          TAG: $NEXT_TAG
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#      - name: Tag Last Commit
+#        id: "tag_last_commit"
+#        run: |
+#          git tag -a $NEXT_TAG -m "Tag commit"
+#          git push origin $NEXT_TAG
 
   print_commit:
     runs-on: ubuntu-latest
