@@ -25,7 +25,7 @@ jobs:
       - name: Get Last Tag
         run: |
           export TAG_REGEX="${{ github.event.inputs.tag }}-*"
-          git tag -l --sort=-v:refname "$TAG_REGEX"
+          echo "$(git tag -l --sort=-v:refname $TAG_REGEX)"
       - name: Tag Commit
         run:
       - name: Get
