@@ -25,6 +25,7 @@ jobs:
           fetch-depth: 0
       - name: Get Last Tag
         id: "get_last_tag"
+        shell: bash
         run: |
           LAST_TAG=$(git tag -l --sort=-v:refname "${{ github.event.inputs.service }}-*")
           echo "Last tag for service ${{ github.event.inputs.service }} was $LAST_TAG"
@@ -32,12 +33,12 @@ jobs:
           NEXT_VERSION=$(($CURRENT_VERSION+1))
           NEXT_TAG="${{ github.event.inputs.service }}-$NEXT_VERSION"
           echo "Next tag will be $NEXT_TAG"
-      #- name: Get
-       # id: "get_hash"
-        #run: |
-         # TAG_NAME=${{ github.event.inputs.tag }}
-          #echo "history=$(git log --oneline $TAG_NAME..HEAD)" >> $GITHUB_OUTPUT
-
+          echo "NEXT_TAG=$NEXT_TAG" >> $GITHUB_ENV
+      - name: Tag Last Commit
+        id: "tag_last_commit"
+        run: |
+          git tag -a $NEXT_TAG -m "Tag commit"
+          git push origin $NEXT_TAG
 
   print_commit:
     runs-on: ubuntu-latest
