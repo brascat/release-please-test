@@ -17,21 +17,26 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       history: ${{steps.get_hash.outputs.history}}
+      last_tag: ${{steps.get_last_tag.outputs.last_tag}}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Get Last Tag
+        id: "get_last_tag"
         run: |
-          git tag -l --sort=-v:refname "${{ github.event.inputs.service }}-*"
-      - name: Tag Commit
-        run:
-      - name: Get
-        id: "get_hash"
-        run: |
-          TAG_NAME=${{ github.event.inputs.tag }}
-          echo "history=$(git log --oneline $TAG_NAME..HEAD)" >> $GITHUB_OUTPUT 
+          LAST_TAG=$(git tag -l --sort=-v:refname "${{ github.event.inputs.service }}-*")
+          echo "Last tag for service ${{ github.event.inputs.service }} was $LAST_TAG"
+          CURRENT_VERSION="${LAST_TAG#*-}"
+          NEXT_VERSION=$(($number+1))
+          NEXT_TAG="${{ github.event.inputs.service }}-$NEXT_VERSION"
+          echo "Next tag will be $NEXT_TAG"
+      #- name: Get
+       # id: "get_hash"
+        #run: |
+         # TAG_NAME=${{ github.event.inputs.tag }}
+          #echo "history=$(git log --oneline $TAG_NAME..HEAD)" >> $GITHUB_OUTPUT
 
 
   print_commit:
