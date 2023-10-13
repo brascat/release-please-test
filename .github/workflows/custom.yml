@@ -4,9 +4,6 @@ name: custom
 on:
   workflow_dispatch:
     inputs:
-      tag:
-        description: 'Tag to tag the commit with'
-        required: false
       service:
         description: 'The service to deploy'
         required: false
@@ -17,15 +14,16 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       history: ${{steps.get_hash.outputs.history}}
-      last_tag: ${{steps.get_last_tag.outputs.last_tag}}
+      last_tag: ${{steps.get_next_tag.outputs.last_tag}}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Get Last Tag
-        id: "get_last_tag"
+      - name: Calculate next Tag
+        id: "get_next_tag"
         shell: bash
+        # Simple incremental tag
         run: |
           LAST_TAG=$(git tag -l --sort=-v:refname "${{ github.event.inputs.service }}-*" | head -1)
           echo "LAST_TAG=$LAST_TAG" >> $GITHUB_ENV
@@ -57,6 +55,10 @@ jobs:
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.NEXT_TAG }}
+          release_name: ${{ env.NEXT_TAG }}
+          body: ${{ steps.changelog.outputs.changelog }}
 
 
   print_commit:
