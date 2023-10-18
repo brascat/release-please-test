@@ -45,10 +45,15 @@ jobs:
             for file in "${files_list[@]}"
             do
               if [[ "$file" == ${{ github.event.inputs.service }}* ]]; then
-                echo "$file starts with ${{ github.event.inputs.service }}"
+                echo "$file at $commit is part of ${{ github.event.inputs.service }}"
+                echo $(git log -n 1 --pretty=format:%s $commit) >> changelog
               else
-                echo "$file does not start with ${{ github.event.inputs.service }}"
+                echo "$file at $commit is not part of ${{ github.event.inputs.service }}"
               fi
               echo "Found: $file"
             done
           done
+      - name: Print changelog
+        id: "print_changelog"
+        run: |
+          cat changelog
