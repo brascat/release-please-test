@@ -44,6 +44,8 @@ jobs:
             while IFS= read -r line; do
               files_list+=("$line")
             done <<< "$files_string"
+            echo "Files list: $files_list"
+            echo "Files string: $files_string"
             found=false
             for file in "${files_list[@]}"
             do
