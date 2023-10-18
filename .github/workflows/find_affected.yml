@@ -1,0 +1,54 @@
+# Workflow to find affected files and add them to changelog
+name: find_affected
+
+on:
+  workflow_dispatch:
+    inputs:
+      service:
+        description: 'The service to deploy'
+        required: true
+
+
+jobs:
+  find_affected:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Calculate next Tag
+        id: "get_next_tag"
+        shell: bash
+        # Simple incremental tag
+        run: |
+          LAST_TAG=$(git tag -l --sort=-v:refname "${{ github.event.inputs.service }}-*" | head -1)
+          echo "LAST_TAG=$LAST_TAG" >> $GITHUB_ENV
+          echo "Last tag for service ${{ github.event.inputs.service }} was $LAST_TAG"
+          CURRENT_VERSION="${LAST_TAG#*-}"
+          NEXT_VERSION=$(($CURRENT_VERSION+1))
+          NEXT_TAG="${{ github.event.inputs.service }}-$NEXT_VERSION"
+          echo "Next tag will be $NEXT_TAG"
+          echo "NEXT_TAG=$NEXT_TAG" >> $GITHUB_ENV
+      - name: Get all commits
+        run: |
+          commit_string=$(git rev-list ${{ env.LAST_TAG }}..HEAD)
+          while IFS= read -r line; do
+              commit_list+=("$line")
+          done <<< "$commit_string"
+          for commit in "${commit_list[@]}"
+          do
+            files_string=$(git diff-tree --no-commit-id --name-only -r $commit)
+            while IFS= read -r line; do
+              files_list+=("$line")
+            done <<< "$files_string"
+            for file in "${files_list[@]}"
+            do
+              if [[ "$file" == ${{ github.event.inputs.service }}* ]]; then
+                echo "$file starts with ${{ github.event.inputs.service }}"
+              else
+                echo "$file does not start with ${{ github.event.inputs.service }}"
+              fi
+              echo "Found: $file"
+            done
+          done
