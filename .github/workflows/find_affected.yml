@@ -38,6 +38,8 @@ jobs:
           done <<< "$commit_string"
           for commit in "${commit_list[@]}"
           do
+            files_list=""
+            files_string=""
             files_string=$(git diff-tree --no-commit-id --name-only -r $commit)
             while IFS= read -r line; do
               files_list+=("$line")
