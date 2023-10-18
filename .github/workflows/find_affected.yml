@@ -42,16 +42,20 @@ jobs:
             while IFS= read -r line; do
               files_list+=("$line")
             done <<< "$files_string"
+            found=false
             for file in "${files_list[@]}"
             do
               if [[ "$file" == ${{ github.event.inputs.service }}* ]]; then
                 echo "$file at $commit is part of ${{ github.event.inputs.service }}"
-                echo $(git log -n 1 --pretty=format:%s $commit) >> changelog
+                found=true
               else
                 echo "$file at $commit is not part of ${{ github.event.inputs.service }}"
               fi
               echo "Found: $file"
             done
+            if [ "$found" = true ]; then
+              echo $(git log -n 1 --pretty=format:"%h %an %ad %s" $commit) >> changelog
+            fi
           done
       - name: Print changelog
         id: "print_changelog"
