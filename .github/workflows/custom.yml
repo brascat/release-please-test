@@ -7,6 +7,10 @@ on:
       service:
         description: 'The service to deploy'
         required: true
+        type: choice
+        options:
+          - "service1"
+          - "service2"
 
 
 jobs:
@@ -27,7 +31,7 @@ jobs:
         run: |
           LAST_TAG=$(git tag -l --sort=-v:refname "${{ github.event.inputs.service }}-*" | head -1)
           if [[ -z "${LAST_TAG}" ]]; then
-            echo "No previous tag found."
+            echo "::error::No previous tag found"
           fi
           echo "LAST_TAG=$LAST_TAG" >> $GITHUB_ENV
           CURRENT_VERSION="${LAST_TAG#*-}"
