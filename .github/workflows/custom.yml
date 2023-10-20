@@ -26,18 +26,21 @@ jobs:
         # Simple incremental tag
         run: |
           LAST_TAG=$(git tag -l --sort=-v:refname "${{ github.event.inputs.service }}-*" | head -1)
+          if [[ -z "${LAST_TAG}" ]]; then
+            echo "No previous tag found."
+          fi
           echo "LAST_TAG=$LAST_TAG" >> $GITHUB_ENV
-          echo "Last tag for service ${{ github.event.inputs.service }} was $LAST_TAG"
           CURRENT_VERSION="${LAST_TAG#*-}"
-          NEXT_VERSION=$(($CURRENT_VERSION+1))
+          NEXT_VERSION=$(( $CURRENT_VERSION + 1 ))
           NEXT_TAG="${{ github.event.inputs.service }}-$NEXT_VERSION"
-          echo "Next tag will be $NEXT_TAG"
+          echo "${{ github.event.inputs.service }} : $LAST_TAG -> $NEXT_TAG"
           echo "NEXT_TAG=$NEXT_TAG" >> $GITHUB_ENV
       - name: Tag Last Commit
         uses: cardinalby/git-tag-action@master
         env:
           TAG: ${{ env.NEXT_TAG }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        # also can be done manually
 #      - name: Generate Release Notes
 #        id: "changelog"
 #        uses: metcalfc/changelog-generator@v4.1.0
