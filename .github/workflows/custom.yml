@@ -6,7 +6,7 @@ on:
     inputs:
       service:
         description: 'The service to deploy'
-        required: false
+        required: true
 
 
 jobs:
@@ -38,18 +38,51 @@ jobs:
         env:
           TAG: ${{ env.NEXT_TAG }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Generate Release Notes
-        id: "changelog"
-        uses: metcalfc/changelog-generator@v4.1.0
-        with:
-          myToken: ${{ secrets.GITHUB_TOKEN }}
-          head-ref: ${{ env.NEXT_TAG }}
-          base-ref: ${{ env.LAST_TAG }}
-      - name: Get Changelog
+#      - name: Generate Release Notes
+#        id: "changelog"
+#        uses: metcalfc/changelog-generator@v4.1.0
+#        with:
+#          myToken: ${{ secrets.GITHUB_TOKEN }}
+#          head-ref: ${{ env.NEXT_TAG }}
+#          base-ref: ${{ env.LAST_TAG }}
+#      - name: Get Changelog
+#        run: |
+#          cat << "EOF"
+#          ${{ steps.changelog.outputs.changelog }}
+#          EOF
+      - name: Create changelog
+        id: "create_changelog"
         run: |
-          cat << "EOF"
-          ${{ steps.changelog.outputs.changelog }}
-          EOF
+          commit_string=$(git rev-list ${{ env.LAST_TAG }}..HEAD)
+          while IFS= read -r line; do
+              commit_list+=("$line")
+          done <<< "$commit_string"
+          for commit in "${commit_list[@]}"
+          do
+            unset files_list
+            unset files_string
+            files_string=$(git diff-tree --no-commit-id --name-only -r $commit)
+            while IFS= read -r line; do
+              files_list+=("$line")
+            done <<< "$files_string"
+            echo "Files list: $files_list"
+            echo "Files string: $files_string"
+            found=false
+            for file in "${files_list[@]}"
+            do
+              if [[ "$file" == ${{ github.event.inputs.service }}* ]]; then
+                echo "$file at $commit is part of ${{ github.event.inputs.service }}"
+                found=true
+              else
+                echo "$file at $commit is not part of ${{ github.event.inputs.service }}"
+              fi
+              echo "Found: $file"
+            done
+            if [ "$found" = true ]; then
+              echo $(git log -n 1 --pretty=format:"%h %an %ad %s" $commit) >> changelog
+            fi
+          done
+          echo "CHANGELOG=$(cat changelog)" >>  >> $GITHUB_ENV
       - name: Create Release
         id: "create_release"
         uses: actions/create-release@v1
@@ -58,7 +91,7 @@ jobs:
         with:
           tag_name: ${{ env.NEXT_TAG }}
           release_name: ${{ env.NEXT_TAG }}
-          body: ${{ steps.changelog.outputs.changelog }}
+          body: ${{ env.CHANGELOG }}
 
 
   print_commit:
