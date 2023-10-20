@@ -24,6 +24,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
       - name: Calculate next Tag
         id: "get_next_tag"
         shell: bash
@@ -40,27 +41,18 @@ jobs:
           NEXT_TAG="${{ github.event.inputs.service }}-$NEXT_VERSION"
           echo "${{ github.event.inputs.service }} : $LAST_TAG -> $NEXT_TAG"
           echo "NEXT_TAG=$NEXT_TAG" >> $GITHUB_ENV
+
       - name: Tag Last Commit
         uses: cardinalby/git-tag-action@master
         env:
           TAG: ${{ env.NEXT_TAG }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         # also can be done manually
-#      - name: Generate Release Notes
-#        id: "changelog"
-#        uses: metcalfc/changelog-generator@v4.1.0
-#        with:
-#          myToken: ${{ secrets.GITHUB_TOKEN }}
-#          head-ref: ${{ env.NEXT_TAG }}
-#          base-ref: ${{ env.LAST_TAG }}
-#      - name: Get Changelog
-#        run: |
-#          cat << "EOF"
-#          ${{ steps.changelog.outputs.changelog }}
-#          EOF
+
       - name: Create changelog
         id: "create_changelog"
         run: |
+          echo "## [${{ env.NEXT_TAG }}](https://github.com/brascat/release-please-test/compare/${{ env.LAST_TAG }}...${{ env.NEXT_TAG }}) $(date -I)\n\n### What changed" >> changelog
           commit_string=$(git rev-list ${{ env.LAST_TAG }}..HEAD)
           while IFS= read -r line; do
               commit_list+=("$line")
@@ -87,10 +79,11 @@ jobs:
               echo "Found: $file"
             done
             if [ "$found" = true ]; then
-              echo $(git log -n 1 --pretty=format:"%h %an %ad %s" $commit) >> changelog
+              echo "* $(git log -n 1 --pretty=format:"%h (%an, %cs) %s" $commit)" >> changelog
             fi
           done
           echo "CHANGELOG=$(cat changelog)" >> $GITHUB_ENV
+
       - name: Create Release
         id: "create_release"
         uses: actions/create-release@v1
