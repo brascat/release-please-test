@@ -70,7 +70,7 @@ jobs:
               echo "* $(git log -n 1 --pretty=format:"%h (%an, %cs) %s" $commit)" >> changelog
             fi
           done
-          echo "CHANGELOG=$(cat changelog)" >> $GITHUB_ENV
+          # echo "CHANGELOG=$(cat changelog)" >> $GITHUB_ENV
 
       - name: Create Release
         id: "create_release"
