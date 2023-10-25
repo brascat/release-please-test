@@ -52,7 +52,7 @@ jobs:
       - name: Create changelog
         id: "create_changelog"
         run: |
-          echo -e ' [${{ env.NEXT_TAG }}](https://github.com/brascat/release-please-test/compare/${{ env.LAST_TAG }}...${{ env.NEXT_TAG }}) $(date -I)' >> changelog
+          echo -e ' [${{ env.NEXT_TAG }}](https://github.com/brascat/release-please-test/compare/${{ env.LAST_TAG }}...${{ env.NEXT_TAG }})' >> changelog
           commit_list=($(git rev-list ${{ env.LAST_TAG }}..HEAD))
           for commit in "${commit_list[@]}"
           do
