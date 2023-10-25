@@ -87,7 +87,7 @@ jobs:
             echo 'CHANGELOGG<<EOF'
             cat changelog
             echo EOF
-          } >> $GITHUB_ENV"
+          } >> "$GITHUB_ENV"
           echo $CHANGELOGG
       - name: Create Release
         id: "create_release"
