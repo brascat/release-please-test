@@ -53,10 +53,18 @@ jobs:
         id: "create_changelog"
         run: |
           # echo -e ' [${{ env.NEXT_TAG }}](https://github.com/brascat/release-please-test/compare/${{ env.LAST_TAG }}...${{ env.NEXT_TAG }})' >> changelog
-          commit_list=($(git rev-list ${{ env.LAST_TAG }}..HEAD))
+          commit_string=$(git rev-list ${{ env.LAST_TAG }}..HEAD)
+          while IFS= read -r line; do
+              commit_list+=("$line")
+          done <<< "$commit_string"
           for commit in "${commit_list[@]}"
           do
-            files_string=($(git diff-tree --no-commit-id --name-only -r $commit))
+            unset files_list
+            unset files_string
+            files_string=$(git diff-tree --no-commit-id --name-only -r $commit)
+            while IFS= read -r line; do
+              files_list+=("$line")
+            done <<< "$files_string"
             found=false
             for file in "${files_list[@]}"
             do
