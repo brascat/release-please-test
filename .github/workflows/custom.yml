@@ -53,7 +53,7 @@ jobs:
         id: "create_changelog"
         run: |
           touch changelog
-          echo -e '## [${{ env.NEXT_TAG }}](https://github.com/brascat/release-please-test/compare/${{ env.LAST_TAG }}...${{ env.NEXT_TAG }})\n### Whats changed' >> changelog
+          echo -e "## [${{ env.NEXT_TAG }}](https://github.com/brascat/release-please-test/compare/${{ env.LAST_TAG }}...${{ env.NEXT_TAG }}) $(date -I)\n### What changed" >> changelog
           commit_string=$(git rev-list ${{ env.LAST_TAG }}..HEAD)
           while IFS= read -r line; do
               commit_list+=("$line")
