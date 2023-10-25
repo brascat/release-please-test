@@ -69,7 +69,7 @@ jobs:
             found=false
             for file in "${files_list[@]}"
             do
-              if [[ "$file" == "^${{ github.event.inputs.service }}/*" ]] || [[ "$file" == "^common/*" ]]; then
+              if [ "$file" == "^${{ github.event.inputs.service }}/*" ] || [ "$file" == "^common/*" ]; then
                 echo "$file at $commit is part of ${{ github.event.inputs.service }}"
                 found=true
               fi
