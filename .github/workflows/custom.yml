@@ -82,7 +82,13 @@ jobs:
           echo "CHANGELOG=$(cat changelog)"
           echo $CHANGELOG
           echo "CHANGELOG_ENV=$CHANGELOG" >> $GITHUB_ENV
-
+          echo $CHANGELOG_ENV
+          {
+            echo 'CHANGELOGG<<EOF'
+            cat changelog
+            echo EOF
+          } >> $GITHUB_ENV"
+          echo $CHANGELOGG
       - name: Create Release
         id: "create_release"
         uses: actions/create-release@v1
@@ -91,4 +97,4 @@ jobs:
         with:
           tag_name: ${{ env.NEXT_TAG }}
           release_name: ${{ env.NEXT_TAG }}
-          body: ${{ env.CHANGELOG_ENV }}
+          body: ${{ env.CHANGELOGG }}
