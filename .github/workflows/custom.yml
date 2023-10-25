@@ -70,7 +70,7 @@ jobs:
             for file in "${files_list[@]}"
             do
               echo "$file"
-              if [[ "$file" == (${{ github.event.inputs.service }}|common)/* ]]; then
+              if [[ "$file" =~ (${{ github.event.inputs.service }}|common)/* ]]; then
                 echo "$file at $commit is part of ${{ github.event.inputs.service }}"
                 found=true
               fi
