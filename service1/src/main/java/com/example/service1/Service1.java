@@ -4,4 +4,7 @@ public class Service1 {
 
     private String hello = "hello";
     private String second = "world";
+
+    public Service1() {
+    }
 }
