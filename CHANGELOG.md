@@ -36,3 +36,5 @@
 * TEST-1 | Add feature 1 ([bf56d42](https://github.com/brascat/release-please-test/commit/bf56d427760a10ee1e304ed6bd1786e5aa57cee5))
 * TEST-2 | Add version and changelog file ([007efae](https://github.com/brascat/release-please-test/commit/007efae56c79704ed35593f122a049cd1dc3c353))
 * TEST-4 | Update version.txt ([fac1d0a](https://github.com/brascat/release-please-test/commit/fac1d0ad7e82ae2d5da7465f9f4bf428b15db77b))
+
+- - -
