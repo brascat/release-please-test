@@ -1,5 +1,6 @@
 {
   "branches": "main",
+  "commitPaths": ["service1/*", "common/*" ],
   "repositoryUrl": "https://github.com/brascat/release-please-test",
   "debug": "false",
   "plugins": [
