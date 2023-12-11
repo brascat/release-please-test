@@ -7,6 +7,7 @@ public class Service2 {
     private int test1;
     private int test2;
     private int test3;
+    private int test4;
 
     public Service2(String hello) {
         this.hello = hello;
