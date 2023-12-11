@@ -29,9 +29,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
-          npm i semantic-release-plus
+          npm i semantic-release
+          npm i -D conventional-changelog-conventionalcommits
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          SERVICE=${{ github.event.inputs.service }} npx semantic-release-plus --extends=./release.config.js
+          SERVICE=${{ github.event.inputs.service }} npx semantic-release --extends=./release.config.js

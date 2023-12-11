@@ -6,13 +6,10 @@ module.exports = {
     tagFormat: service + '-v${version}',
     repositoryUrl: 'https://github.com/brascat/release-please-test',
     debug: 'false',
+    preset: 'conventionalcommits',
     plugins: [
-        '@semantic-release/commit-analyzer',
-        [
+            '@semantic-release/commit-analyzer',
             '@semantic-release/release-notes-generator',
-            {
-                preset: 'conventionalcommits'
-            }
         [
             '@semantic-release/github',
             {
@@ -23,6 +20,6 @@ module.exports = {
                     '-v${nextRelease.version} \n\nThe release is available on [GitHub release](<github_release_url>)',
                 discussionCategoryName: 'teste'
             }
-            ]
+        ]
     ]
 }
