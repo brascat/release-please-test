@@ -35,4 +35,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           SERVICE=teste
-          npx semantic-release-plus --tag-format "${{ github.event.inputs.service }}-v\${version}"
+          npx semantic-release-plus --tag-format "${{ github.event.inputs.service }}-v\${version}" --extends=./release.config.js
