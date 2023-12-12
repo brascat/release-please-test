@@ -10,6 +10,7 @@ public class Service2 {
     private int test4;
     private int test5;
     private int test6;
+    private int test7;
 
     public Service2(String hello) {
         this.hello = hello;
