@@ -10,28 +10,21 @@ module.exports = {
             '@semantic-release/commit-analyzer',
             '@semantic-release/release-notes-generator',
         [
-            '@semantic-release/github',
+            ('@semantic-release/github',
             {
-                labels: false,
-                failComment: false,
+                labels: 'false',
+                failComment: 'false',
+                failTitle: 'false',
                 successComment: 'This issue has been resolved in version ' +
                     service +
                     '-v${nextRelease.version} \n\nThe release is available on [GitHub release](<github_release_url>)',
                 discussionCategoryName: 'announcements'
-            }
+            })
         ]
     ],
     preset: 'conventionalcommits',
-    presetConfig: {
-        types: [
-            { type: 'feat', section: 'Features' },
-            { type: 'fix', section: 'Bug Fixes' },
-            { type: 'chore', section: 'Chores' },
-            { type: 'docs', hidden: true },
-            { type: 'style', hidden: true },
-            { type: 'refactor', section: 'Refactoring' },
-            { type: 'perf', hidden: true },
-            { type: 'test', hidden: true },
+    releaseRules: [
+        { type: "feat!", release: "major" }
         ],
-    }
+
 }
