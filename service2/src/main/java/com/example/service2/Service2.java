@@ -8,6 +8,7 @@ public class Service2 {
     private int test2;
     private int test3;
     private int test4;
+    private int test5;
 
     public Service2(String hello) {
         this.hello = hello;
