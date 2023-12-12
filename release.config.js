@@ -16,6 +16,7 @@ module.exports = {
                 failComment: false,
                 failTitle: false,
                 discussionCategoryName: 'Announcements',
+                releaseBodyTemplate: 'teste \n <%= nextverison.notes %>',
                 successComment: 'This issue has been resolved in version ' +
                     service +
                     '-v${nextRelease.version} \n\nThe release is available on [GitHub release](<github_release_url>)'
