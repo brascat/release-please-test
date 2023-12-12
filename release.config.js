@@ -12,9 +12,9 @@ module.exports = {
         [
             ('@semantic-release/github',
             {
-                labels: 'false',
-                failComment: 'false',
-                failTitle: 'false',
+                labels: false,
+                failComment: false,
+                failTitle: false,
                 successComment: 'This issue has been resolved in version ' +
                     service +
                     '-v${nextRelease.version} \n\nThe release is available on [GitHub release](<github_release_url>)',
