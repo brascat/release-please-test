@@ -12,6 +12,10 @@ module.exports = {
         [
             '@semantic-release/github',
             {
+                labels: false,
+                failComment: false,
+                failTitle: false,
+                discussionCategoryName: 'Announcements',
                 releaseBodyTemplate: 'teste \n <%= nextverison.notes %>',
                 successComment: 'This issue has been resolved in version ' +
                     service +
