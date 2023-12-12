@@ -6,7 +6,6 @@ module.exports = {
     tagFormat: service + '-v${version}',
     repositoryUrl: 'https://github.com/brascat/release-please-test',
     debug: 'false',
-    preset: 'conventionalcommits',
     plugins: [
             '@semantic-release/commit-analyzer',
             '@semantic-release/release-notes-generator',
