@@ -6,6 +6,7 @@ module.exports = {
     tagFormat: service + '-v${version}',
     repositoryUrl: 'https://github.com/brascat/release-please-test',
     debug: 'false',
+    preset: 'conventionalcommits',
     plugins: [
             '@semantic-release/commit-analyzer',
             '@semantic-release/release-notes-generator',
@@ -17,7 +18,7 @@ module.exports = {
                 successComment: 'This issue has been resolved in version ' +
                     service +
                     '-v${nextRelease.version} \n\nThe release is available on [GitHub release](<github_release_url>)',
-                discussionCategoryName: 'teste'
+                discussionCategoryName: 'announcements'
             }
         ]
     ]
