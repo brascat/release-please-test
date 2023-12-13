@@ -38,4 +38,28 @@
 		</plugins>
 	</build>
 
+	<profiles>
+		<profile>
+			<id>incremental</id>
+			<activation>
+				<property>
+					<name>incremental</name>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>io.github.gitflow-incremental-builder</groupId>
+						<artifactId>gitflow-incremental-builder</artifactId>
+						<version>4.5.1</version>
+						<extensions>true</extensions>
+						<configuration>
+							<skipTestsForUpstreamModules>true</skipTestsForUpstreamModules>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
 </project>
