@@ -5,14 +5,14 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.1.4</version>
+        <version>3.2.0</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.example</groupId>
-    <artifactId>service1</artifactId>
+    <artifactId>common2</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>service1</name>
-    <description>service1</description>
+    <name>common2</name>
+    <description>common2</description>
     <properties>
         <java.version>17</java.version>
     </properties>
@@ -26,12 +26,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.example</groupId>
-            <artifactId>common1</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
