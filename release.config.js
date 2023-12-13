@@ -2,7 +2,7 @@ let service = process.env.SERVICE;
 
 module.exports = {
     branches: 'main',
-    commitPaths: [`${service}/*`, 'common/*'],
+    commitPaths: [`${service}/*`, 'common/*', '*.*'],
     tagFormat: service + '-v${version}',
     repositoryUrl: 'https://github.com/brascat/release-please-test',
     debug: 'false',
@@ -15,8 +15,6 @@ module.exports = {
                 labels: false,
                 failComment: false,
                 failTitle: false,
-                discussionCategoryName: 'Announcements',
-                releaseBodyTemplate: 'teste \n <%= nextverison.notes %>',
                 successComment: 'This issue has been resolved in version ' +
                     service +
                     '-v${nextRelease.version} \n\nThe release is available on [GitHub release](<github_release_url>)'

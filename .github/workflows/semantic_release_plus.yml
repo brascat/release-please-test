@@ -31,7 +31,6 @@ jobs:
         run: |
           npm i semantic-release-plus
           npm i conventional-changelog-conventionalcommits
-          npm install @semantic-release/github
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
