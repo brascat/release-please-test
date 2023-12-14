@@ -1,8 +1,30 @@
+const fs = require('fs');
 let service = process.env.SERVICE;
+const inputFile = 'gib-impacted.log';
+
+function processPathsFile() {
+    const affectedPaths = []
+    const fileContent = fs.readFileSync(inputFile, 'utf-8', (err, data) => {
+        console.error('Error processing the file:', data);
+    })
+    console.log(fileContent);
+    const lines = fileContent.split('\n');
+
+    lines.forEach((line) => {
+        if(line !== "common" && line !== "") {
+            const modifiedLine = line + '/*';
+            affectedPaths.push(modifiedLine);
+        }
+    })
+    console.log('Services affected: ', affectedPaths);
+
+    return affectedPaths;
+}
 
 module.exports = {
     branches: 'main',
-    commitPaths: [`${service}/*`, 'common/*', '*.*'],
+    commitPaths: processPathsFile(inputFile),
+    //commitPaths: [`${service}/*`, 'common/*', '*.*'],
     tagFormat: service + '-v${version}',
     repositoryUrl: 'https://github.com/brascat/release-please-test',
     debug: 'false',
