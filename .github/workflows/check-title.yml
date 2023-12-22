@@ -1,7 +1,6 @@
 name: Lint PR Title
 on:
-  pull_request:
-       types: [opened, edited]
+    [pull_request]
 
 
 jobs:
@@ -19,14 +18,14 @@ jobs:
             exit 0
           fi
         
-          echo "":x: PR Title does not meet CE conventions" >> $GITHUB_STEP_SUMMARY
+          echo ":x: PR Title does not meet CE conventions" >> $GITHUB_STEP_SUMMARY
           echo "***********************************************************************"  >> $GITHUB_STEP_SUMMARY                                                                                                                                                      
           echo "Available commit message types: ${commit_types}" >> $GITHUB_STEP_SUMMARY
           echo "Available commit spaces: ${commit_spaces}" >> $GITHUB_STEP_SUMMARY
-          echo "  <type>(<scope>): <jira-id>  <description> - <scope> is optional but advised" >> $GITHUB_STEP_SUMMARY
+          echo "  <type>(<scope>): <jira-id> | <description> - <scope> is optional but advised" >> $GITHUB_STEP_SUMMARY
           echo "***********************************************************************" >> $GITHUB_STEP_SUMMARY
           echo "An example of a valid message is: " >> $GITHUB_STEP_SUMMARY
           echo "  feat(StarterErrors): OS1TEAM1-123 | add new exception type" >> $GITHUB_STEP_SUMMARY
           echo "More details at: https://devstack.vwgroup.com/confluence/x/3JBBdg#EnableCEindependentreleaseswithTrunkBasedDevelopment-Gitconventions" >> $GITHUB_STEP_SUMMARY
-          #
+          
           exit 1
