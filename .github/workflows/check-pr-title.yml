@@ -1,0 +1,30 @@
+on:
+  pull_request:
+    types: [edited, opened, synchronize, reopened]
+
+jobs:
+  check-pr-title:
+    name: Check PR title
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate PR Title
+        if: github.event.pull_request.number != ''
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: amannn/action-semantic-pull-request@v5
+        with:
+          types: |
+            build
+            chore
+            ci
+            docs
+            feat
+            fix
+            refactor
+            revert
+            style
+            test
+          requireScope: false
+          subjectPattern: (^([A-Z0-9]{3,})-[0-9]+) \| (.{0,80})\n?(?:(\s|.)*)
+          subjectPatternError: |
+            The subject "{subject}" found in the pull request title didn't match the configured pattern.
