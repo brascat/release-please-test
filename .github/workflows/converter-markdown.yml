@@ -35,10 +35,10 @@ jobs:
            " >> temp_file
       - name: Convert markdown to HTML
         id: markdown-converter
-        uses: jaywcjlove/markdown-to-html-cli@v4.0.3
+        uses: natescherer/markdown-to-html-with-github-style-action@v1.1.0
         with:
-          source: temp_file
-          output: result_file
+          path: temp_file
+          outputpath: result_file
       - name: Print
         shell: bash
         run: |
