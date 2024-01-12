@@ -1,0 +1,46 @@
+on:
+  workflow_dispatch:
+
+
+jobs:
+  convert:
+    name: Convert
+    runs-on: ubuntu-latest
+    steps:
+      - name: Save changelog
+        shell: bash
+        run: |
+          touch temp_file
+          echo "## 🚀 Features
+          
+           - #1053: feat(import): OS1TEAM1-167 | Remove subProductType handling
+          
+           ## 💬 Other
+          
+           - #1052: OS2TEAM4-138: Enable stock reservation for all brands in Spain
+           - #1056: Updating the configuration files to enable the technical orders in SMT for ES
+           - #1045: feat(CICD): OS2TEAM3-26 | create validate pr title workflow
+           - #1057: fix(CICD): OS2TEAM3-25 | fix parent label
+           - #1070: feat(ce config): OS2TEAM4-138 | Enable stock reservation for dealer stock in VW Spain
+           - #1068: feat(ce config): OS2TEAM4-138 |Enable stock reservation for all brands in Spain
+           - #1071: feat: OS2TEAM3-00 | rotate VW-DE-DEV
+           - #1072: feat(DeliveryOptions): OS2TEAM3-61 | split delivery options configs
+           - #970: feat(CICD): OS2TEAM3-17 | create release changelog workflow
+           - #1076: build(ce setup): OS2TEAM1-151 | Dev Container for ansible on local envioronment
+           - #1077: feat(merchants): OS2TEAM4-43 | enable onesce prefix for pdf service
+           - #945: feat(order): OS2TEAM4-50 | Extend FS callback to accept FSApplicationRequestToken
+           - #1040: chore: OS2TEAM3-0 | update PR template with new spaces
+           - #1081: ci: OS2TEAM3-0 | make ce_setup types general
+          
+           " >> temp_file
+      - name: Convert markdown to HTML
+        id: markdown-converter
+        uses: jaywcjlove/markdown-to-html-cli@v4.0.3
+        with:
+          source: temp_file
+          output: result_file
+      - name: Print
+        shell: bash
+        run: |
+          cat result_file
+          echo ${{ steps.output.markdown-converter.html }}
