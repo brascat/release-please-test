@@ -33,12 +33,10 @@ jobs:
            - #1081: ci: OS2TEAM3-0 | make ce_setup types general
           
            " >> temp_file
-      - name: Convert markdown to HTML
-        id: markdown-converter
-        uses: natescherer/markdown-to-html-with-github-style-action@v1.1.0
-        with:
-          path: temp_file
-          outputpath: result_file
+      - name: Install
+        run: npm install -g marked
+      - name: Run marked
+        run: marked -i temp_file -o result_file
       - name: Print
         shell: bash
         run: |
