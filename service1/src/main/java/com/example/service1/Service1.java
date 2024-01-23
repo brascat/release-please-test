@@ -6,5 +6,6 @@ public class Service1 {
     private String second = "world";
 
     public Service1() {
+        System.out.println(hello + second);
     }
 }
